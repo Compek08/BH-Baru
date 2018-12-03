@@ -11,7 +11,7 @@ import battle.of.hero.View.PlayClassic;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Stack;
+import java.util.Arrays;
 
 /**
  *
@@ -29,13 +29,33 @@ public class Enemy extends Summoner {
 //                System.out.println(deck.size());
             }
         });
+//        System.out.println(deck.size());
         Collections.shuffle(deck);
-        if (deck.size() > 40) {
-            int selisih = deck.size() - 40;
+//        System.out.println(deck.get(57).getNama());
+        if (deck.size() > 80) {
+            int selisih = deck.size() - 80;
+//            System.out.println(selisih);
             for (int i = 0; i < selisih; i++) {
                 deck.remove(i);
             }
             deck.trimToSize();
+        }
+        Collections.shuffle(deck);
+        if (deck.size() > 40) {
+            int selisih = deck.size() - 40;
+//            System.out.println(selisih);
+            for (int i = 0; i < selisih; i++) {
+                deck.remove(i);
+            }
+            deck.trimToSize();
+        }
+//        System.out.println(deck.size());
+        for (int i = 0; i < 5; i++) {
+//            System.out.println(deck.get(i).getPic());
+        }
+        super.setDeck();
+        for (int i = 0; i < 5; i++) {
+//            System.out.println("Enemy = " + deck.get(i).getPic());
         }
     }
 

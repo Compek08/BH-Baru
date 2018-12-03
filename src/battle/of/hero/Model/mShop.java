@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import BattleMain.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import javax.swing.DefaultListModel;
 
@@ -64,46 +65,61 @@ public class mShop {
         return uang;
     }
 
-    public void gacha(String tipe) throws SQLException {
+    public int gacha(String tipe) throws SQLException {
         ArrayList<Card> Cards = mCard.getCard();
         Random R = new Random();
-        int get;
+        int get = 0;
         ArrayList<Integer> gacha = new ArrayList<>();
-        if (tipe.equalsIgnoreCase("hero")) {
-//            for (int i = 0; i < 3; i++) {
-            Cards.forEach((Card) -> {
-                if (Card.getGrade() == 1) {
-                    for (int j = 0; j < 37; j++) {
-                        gacha.add(Card.getId());
+        switch (tipe) {
+            case "hero":
+                Cards.clear();
+                Cards.addAll(mCard.getCatPedia(1));
+                Collections.shuffle(Cards);
+                Cards.addAll(mCard.getCatPedia(2));
+                Collections.shuffle(Cards);
+                Cards.addAll(mCard.getCatPedia(3));
+                Collections.shuffle(Cards);
+                
+                Collections.shuffle(Cards);
+                gacha.clear();
+                Cards.forEach((Card) -> {
+                    if (Card.getGrade() == 1) {
+                        for (int j = 0; j < 37; j++) {
+                            gacha.add(Card.getId());
+                        }
                     }
-                }
-                if (Card.getGrade() == 2) {
-                    for (int j = 0; j < 12; j++) {
-                        gacha.add(Card.getId());
+                    if (Card.getGrade() == 2) {
+                        for (int j = 0; j < 12; j++) {
+                            gacha.add(Card.getId());
+                        }
                     }
-                }
-                if (Card.getGrade() == 3) {
-                    for (int j = 0; j < 1; j++) {
-                        gacha.add(Card.getId());
+                    if (Card.getGrade() == 3) {
+                        for (int j = 0; j < 1; j++) {
+                            gacha.add(Card.getId());
+                        }
                     }
-                }
-            });
-//            }
-//System.out.println(gacha.size());
-            get = R.nextInt(gacha.size());
-        } else {
-            Cards.forEach((Card) -> {
-                System.out.println(Card.getGrade());
-                if (Card.getGrade() == 4) {
-                    for (int j = 0; j < 30; j++) {
-                        gacha.add(Card.getId());
+                });
+                Collections.shuffle(Cards);
+                get = R.nextInt(gacha.size());
+                break;
+
+            case "spell":
+                Cards.clear();
+                Cards.addAll(mCard.getCatPedia(4));
+                Collections.shuffle(Cards);
+                gacha.clear();
+                Cards.forEach((Card) -> {
+                    if (Card.getGrade() == 4) {
+                        for (int j = 0; j < 30; j++) {
+                            gacha.add(Card.getId());
+                        }
                     }
-                }
-            });
-            System.out.println(gacha.size());
-            get = R.nextInt(gacha.size());
-            
+                });
+                Collections.shuffle(Cards);
+                get = R.nextInt(gacha.size());
+                break;
         }
-        mCard.save(Cards.get(gacha.get(get)).getId(), "koleksi");
+        mCard.save(gacha.get(get), "koleksi");
+        return gacha.get(get);
     }
 }

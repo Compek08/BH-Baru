@@ -64,7 +64,7 @@ public class Shop extends javax.swing.JFrame {
 
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("BACK");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -79,17 +79,17 @@ public class Shop extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 630, 100, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 70, 60));
 
         poin.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
         poin.setText("Poin");
         getContentPane().add(poin, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 190, 60));
 
-        gHero.setText("Kartu Penyeang");
-        getContentPane().add(gHero, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, 260, 80));
+        gHero.setContentAreaFilled(false);
+        getContentPane().add(gHero, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 370, 100));
 
-        gSpell.setText("Kartu Pendukung");
-        getContentPane().add(gSpell, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 480, 260, 90));
+        gSpell.setContentAreaFilled(false);
+        getContentPane().add(gSpell, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 480, 370, 90));
         getContentPane().add(Dapat, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 250, 400));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/SHOP.png"))); // NOI18N

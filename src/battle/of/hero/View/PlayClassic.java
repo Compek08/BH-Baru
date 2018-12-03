@@ -1,15 +1,20 @@
 package battle.of.hero.View;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author rakas
@@ -21,6 +26,20 @@ public class PlayClassic extends javax.swing.JFrame {
      */
     public PlayClassic() {
         initComponents();
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.setBackground(new Color(0, 0, 0, 0));
+        jScrollPane1.getViewport().setOpaque(false);
+        jScrollPane1.getViewport().setBackground(new Color(0, 0, 0, 0));
+        history.setOpaque(false);
+        history.setBackground(new Color(0, 0, 0, 0));
+
+        btnDraw.setBorder(new RoundedBorder(10)); //10 is the radius
+        btnDraw.setForeground(Color.BLUE);
+        btnDraw.setBorder(new RoundedBorder(10));
+    }
+
+    public JTextArea getHistory() {
+        return history;
     }
 
     public JButton getBtnStart() {
@@ -167,6 +186,14 @@ public class PlayClassic extends javax.swing.JFrame {
         return D7;
     }
 
+    public JButton getESpell() {
+        return ESpell;
+    }
+
+    public JButton getPSpell() {
+        return PSpell;
+    }
+
     public ButtonGroup getGrA1() {
         return GrA1;
     }
@@ -219,6 +246,14 @@ public class PlayClassic extends javax.swing.JFrame {
         return End;
     }
 
+    public JLabel getEHP() {
+        return EHP;
+    }
+
+    public JLabel getPHP() {
+        return PHP;
+    }
+
 //    public JLabel getA1() {
 //        return A1;
 //    }
@@ -234,13 +269,20 @@ public class PlayClassic extends javax.swing.JFrame {
 //    public JLabel getA4() {
 //        return A4;
 //    }
-
     public JLabel getOmbean1() {
         return Ombean1;
     }
 
     public JLabel getOmbean2() {
         return Ombean2;
+    }
+
+    public JButton getKuburanE() {
+        return KuburanE;
+    }
+
+    public JButton getKuburanP() {
+        return KuburanP;
     }
 
 //    public JLabel getA5() {
@@ -374,7 +416,6 @@ public class PlayClassic extends javax.swing.JFrame {
 //    public JPanel getjPanel6() {
 //        return jPanel6;
 //    }
-
 //    public JLabel getB2() {
 //        return B2;
 //    }
@@ -446,7 +487,6 @@ public class PlayClassic extends javax.swing.JFrame {
 //    public JLabel getD7() {
 //        return D7;
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -481,14 +521,14 @@ public class PlayClassic extends javax.swing.JFrame {
         A9 = new javax.swing.JButton();
         A10 = new javax.swing.JButton();
         B1 = new javax.swing.JButton();
-        B2 = new javax.swing.JButton();
         B3 = new javax.swing.JButton();
-        B4 = new javax.swing.JButton();
+        B2 = new javax.swing.JButton();
         B5 = new javax.swing.JButton();
-        B6 = new javax.swing.JButton();
+        B4 = new javax.swing.JButton();
         B7 = new javax.swing.JButton();
-        B8 = new javax.swing.JButton();
+        B6 = new javax.swing.JButton();
         B9 = new javax.swing.JButton();
+        B8 = new javax.swing.JButton();
         B10 = new javax.swing.JButton();
         C1 = new javax.swing.JButton();
         C2 = new javax.swing.JButton();
@@ -497,6 +537,8 @@ public class PlayClassic extends javax.swing.JFrame {
         C5 = new javax.swing.JButton();
         C6 = new javax.swing.JButton();
         C7 = new javax.swing.JButton();
+        PSpell = new javax.swing.JButton();
+        ESpell = new javax.swing.JButton();
         D1 = new javax.swing.JButton();
         D2 = new javax.swing.JButton();
         D3 = new javax.swing.JButton();
@@ -506,7 +548,19 @@ public class PlayClassic extends javax.swing.JFrame {
         D7 = new javax.swing.JButton();
         End = new javax.swing.JButton();
         Turn = new javax.swing.JLabel();
+        EHP = new javax.swing.JLabel();
+        PHP = new javax.swing.JLabel();
         btnStart = new javax.swing.JButton();
+        KuburanE = new javax.swing.JButton();
+        KuburanP = new javax.swing.JButton();
+        btnDraw = new javax.swing.JButton();
+        btnStandBy = new javax.swing.JButton();
+        btnMain1 = new javax.swing.JButton();
+        btnAttack = new javax.swing.JButton();
+        btnMain2 = new javax.swing.JButton();
+        btnEnd = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        history = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -558,8 +612,8 @@ public class PlayClassic extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(Ombean1, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 60, 80));
-        getContentPane().add(Ombean2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 60, 80));
+        getContentPane().add(Ombean1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 600, 60, 90));
+        getContentPane().add(Ombean2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 30, 60, 80));
         getContentPane().add(A1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 63, 89));
         getContentPane().add(A2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 420, 63, 89));
         getContentPane().add(A3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 420, 63, 89));
@@ -571,14 +625,14 @@ public class PlayClassic extends javax.swing.JFrame {
         getContentPane().add(A9, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 430, 89, 63));
         getContentPane().add(A10, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 430, 89, 63));
         getContentPane().add(B1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 63, 89));
-        getContentPane().add(B2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 89, 63));
         getContentPane().add(B3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 63, 89));
-        getContentPane().add(B4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 89, 63));
+        getContentPane().add(B2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 210, 89, 63));
         getContentPane().add(B5, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, 63, 89));
-        getContentPane().add(B6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 89, 63));
+        getContentPane().add(B4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 89, 63));
         getContentPane().add(B7, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 63, 89));
-        getContentPane().add(B8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 89, 63));
+        getContentPane().add(B6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 89, 63));
         getContentPane().add(B9, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 200, 63, 89));
+        getContentPane().add(B8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 210, 89, 63));
         getContentPane().add(B10, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 89, 63));
         getContentPane().add(C1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 580, 63, 89));
         getContentPane().add(C2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 580, 63, 89));
@@ -587,13 +641,15 @@ public class PlayClassic extends javax.swing.JFrame {
         getContentPane().add(C5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 580, 63, 89));
         getContentPane().add(C6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, 63, 89));
         getContentPane().add(C7, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 580, 63, 89));
-        getContentPane().add(D1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, 63, 89));
-        getContentPane().add(D2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 63, 89));
-        getContentPane().add(D3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 40, 63, 89));
-        getContentPane().add(D4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 40, 63, 89));
-        getContentPane().add(D5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 63, 89));
-        getContentPane().add(D6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 40, 63, 89));
-        getContentPane().add(D7, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 40, 63, 89));
+        getContentPane().add(PSpell, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 490, 63, 89));
+        getContentPane().add(ESpell, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 63, 89));
+        getContentPane().add(D1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 63, 89));
+        getContentPane().add(D2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, 63, 89));
+        getContentPane().add(D3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 50, 63, 89));
+        getContentPane().add(D4, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 50, 63, 89));
+        getContentPane().add(D5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, 63, 89));
+        getContentPane().add(D6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 63, 89));
+        getContentPane().add(D7, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 63, 89));
 
         End.setText("End");
         End.setContentAreaFilled(false);
@@ -603,9 +659,48 @@ public class PlayClassic extends javax.swing.JFrame {
         Turn.setText("Turn : 1");
         getContentPane().add(Turn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, 50));
 
+        EHP.setText("100");
+        getContentPane().add(EHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 50, -1, -1));
+
+        PHP.setText("100");
+        getContentPane().add(PHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, -1, -1));
+
         btnStart.setFont(new java.awt.Font("SansSerif", 1, 70)); // NOI18N
         btnStart.setText("START");
         getContentPane().add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 520, 160));
+
+        KuburanE.setContentAreaFilled(false);
+        getContentPane().add(KuburanE, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 63, 89));
+
+        KuburanP.setContentAreaFilled(false);
+        getContentPane().add(KuburanP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 390, 63, 89));
+
+        btnDraw.setText("Draw");
+        getContentPane().add(btnDraw, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 340, 60, 30));
+
+        btnStandBy.setText("Tunggu");
+        getContentPane().add(btnStandBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 60, 30));
+
+        btnMain1.setText("Main1");
+        getContentPane().add(btnMain1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 60, 30));
+
+        btnAttack.setText("Attack");
+        getContentPane().add(btnAttack, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 60, 30));
+
+        btnMain2.setText("Main2");
+        getContentPane().add(btnMain2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 60, 30));
+
+        btnEnd.setText("End");
+        getContentPane().add(btnEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 340, 60, 30));
+
+        history.setEditable(false);
+        history.setColumns(20);
+        history.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
+        history.setForeground(new java.awt.Color(255, 255, 255));
+        history.setRows(5);
+        jScrollPane1.setViewportView(history);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 170));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/main.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -686,6 +781,8 @@ public class PlayClassic extends javax.swing.JFrame {
     private javax.swing.JButton D5;
     private javax.swing.JButton D6;
     private javax.swing.JButton D7;
+    private javax.swing.JLabel EHP;
+    private javax.swing.JButton ESpell;
     private javax.swing.JButton End;
     private javax.swing.ButtonGroup GrA1;
     private javax.swing.ButtonGroup GrA2;
@@ -697,13 +794,49 @@ public class PlayClassic extends javax.swing.JFrame {
     private javax.swing.ButtonGroup GrB3;
     private javax.swing.ButtonGroup GrB4;
     private javax.swing.ButtonGroup GrB5;
+    private javax.swing.JButton KuburanE;
+    private javax.swing.JButton KuburanP;
     private javax.swing.JLabel Ombean1;
     private javax.swing.JLabel Ombean2;
+    private javax.swing.JLabel PHP;
+    private javax.swing.JButton PSpell;
     private javax.swing.JLabel Turn;
+    private javax.swing.JButton btnAttack;
+    private javax.swing.JButton btnDraw;
+    private javax.swing.JButton btnEnd;
+    private javax.swing.JButton btnMain1;
+    private javax.swing.JButton btnMain2;
+    private javax.swing.JButton btnStandBy;
     private javax.swing.JButton btnStart;
     private javax.swing.ButtonGroup eHand;
+    private javax.swing.JTextArea history;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.ButtonGroup pHand;
     // End of variables declaration//GEN-END:variables
+
+    private static class RoundedBorder implements Border {
+
+        private int radius;
+
+        public RoundedBorder(int i) {
+            radius = i;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+    }
 }

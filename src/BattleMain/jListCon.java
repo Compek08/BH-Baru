@@ -108,4 +108,14 @@ public class jListCon {
         });
         return listModel;
     }
+    
+    public DefaultListModel<Card> getCat(int cat) throws SQLException {
+        listModel = new DefaultListModel();
+        mCard = new mCard();
+        ArrayList<Card> Cards = mCard.getCatPedia(cat);
+        Cards.forEach((Card1) -> {
+            listModel.addElement(Card1.getNama() + "                                                                                                                                                  :" + Card1.getId());
+        });
+        return listModel;
+    }
 }

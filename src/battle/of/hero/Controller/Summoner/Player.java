@@ -26,7 +26,17 @@ public class Player extends Summoner{
     
     private boolean draw = false;
     private boolean end = false;
+    private boolean attack;
+    private ArrayList<Integer> attIndex;
 
+    public boolean isAttack() {
+        return attack;
+    }
+
+    public void setAttack(boolean attack) {
+        this.attack = attack;
+    }
+    
     public boolean isEnd() {
         return end;
     }
@@ -34,15 +44,19 @@ public class Player extends Summoner{
     public void setEnd(boolean end) {
         this.end = end;
     }
-    private final cIcon icon;
 
     public boolean isDraw() {
         return draw;
     }
 
+    public ArrayList<Integer> getAttIndex() {
+        return attIndex;
+    }
+
     public Player(PlayClassic vClassic, String user) throws SQLException {
         super(vClassic, user);
-        icon = new cIcon();
+        attIndex = new ArrayList<>();
+        attack = false;
 //        ImageIcon iI= new ImageIcon();
         mCard mCard = new mCard();
         deck.addAll(mCard.getDeck());
@@ -51,7 +65,10 @@ public class Player extends Summoner{
 //        System.out.println(vClassic.getC2().getWidth());
 //        this.vClassic.getA6().setIcon(icon.rotateImageIcon((ImageIcon) vClassic.getC2().getIcon(), vClassic.getC2().getWidth(), vClassic.getC2().getHeight(), 90));
 //        vClassic.getEnd().addActionListener(new End());
-        
+        super.setDeck();
+//        for (int i = 0; i < 5; i++) {
+//            System.out.println("Player = "+deck.get(i).getPic());
+//        }
     }
 
     @Override
@@ -61,7 +78,7 @@ public class Player extends Summoner{
 
     @Override
     public void Summon(int urut) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.Summon(urut);
     }
     
     @Override

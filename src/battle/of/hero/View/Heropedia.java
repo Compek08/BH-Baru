@@ -1,5 +1,7 @@
 package battle.of.hero.View;
 
+import java.util.Enumeration;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ public class Heropedia extends javax.swing.JFrame {
      */
     public Heropedia() {
         initComponents();
+        Category.setSelected(radioAll.getModel(), rootPaneCheckingEnabled);
     }
 
     /**
@@ -40,6 +43,7 @@ public class Heropedia extends javax.swing.JFrame {
         Back = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         cardList = new javax.swing.JList<>();
+        radioAll = new javax.swing.JRadioButton();
         radioRare = new javax.swing.JRadioButton();
         radioLegend = new javax.swing.JRadioButton();
         radioEpic = new javax.swing.JRadioButton();
@@ -52,6 +56,7 @@ public class Heropedia extends javax.swing.JFrame {
         Category.add(radioLegend);
         Category.add(radioRare);
         Category.add(radioSpell);
+        Category.add(radioAll);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -79,6 +84,9 @@ public class Heropedia extends javax.swing.JFrame {
         jScrollPane1.setViewportView(cardList);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 240, 320));
+
+        radioAll.setText("All Card");
+        getContentPane().add(radioAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, -1, -1));
 
         radioRare.setText("Rare Card");
         radioRare.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +174,22 @@ public class Heropedia extends javax.swing.JFrame {
         return radioSpell;
     }
 
+    public JRadioButton getRadioAll() {
+        return radioAll;
+    }
+    
+    public String getSelectedButtonText() {
+        for (Enumeration<AbstractButton> buttons = Category.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -209,6 +233,7 @@ public class Heropedia extends javax.swing.JFrame {
     private javax.swing.JLabel imgSpell;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton radioAll;
     private javax.swing.JRadioButton radioEpic;
     private javax.swing.JRadioButton radioLegend;
     private javax.swing.JRadioButton radioRare;

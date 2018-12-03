@@ -39,7 +39,8 @@ public class cDeck {
         vDeck.setVisible(true);
         vDeck.getBtnAdd().addActionListener(new addList());
         vDeck.getBtnRemove().addActionListener(new removeList());
-        vDeck.getListCard().addMouseListener(new cardPrev());
+        vDeck.getListCard().addMouseListener(new cardPrev(true));
+        vDeck.getListDeck().addMouseListener(new cardPrev(false));
         vDeck.getBtnSave().addActionListener(new save());
 
         listCard = jList.getCol();
@@ -88,19 +89,50 @@ public class cDeck {
 
     private class cardPrev implements MouseListener {
 
+        private boolean list;
+
+        public cardPrev(boolean list) {
+            this.list = list;
+        }
+
         @Override
         public void mouseClicked(MouseEvent e) {
 //            System.out.println(vDeck.getListCard().getSelectedValue());
-            String[] split = vDeck.getListCard().getSelectedValue().split(":");
-            vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            if (list) {
+                vDeck.getListDeck().clearSelection();
+                String[] split = vDeck.getListCard().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            } else {
+                vDeck.getListCard().clearSelection();
+                String[] split = vDeck.getListDeck().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            }
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
+            if (list) {
+                vDeck.getListDeck().clearSelection();
+                String[] split = vDeck.getListCard().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            } else {
+                vDeck.getListCard().clearSelection();
+                String[] split = vDeck.getListDeck().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            if (list) {
+                vDeck.getListDeck().clearSelection();
+                String[] split = vDeck.getListCard().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            } else {
+                vDeck.getListCard().clearSelection();
+                String[] split = vDeck.getListDeck().getSelectedValue().split(":");
+                vDeck.getCardPrev().setIcon(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(Integer.parseInt(split[1])))));
+            }
         }
 
         @Override

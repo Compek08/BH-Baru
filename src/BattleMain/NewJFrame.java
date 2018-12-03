@@ -5,6 +5,8 @@
  */
 package BattleMain;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.SwingWorker;
 
@@ -91,7 +93,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         };
-        
+
         worker.execute();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -125,30 +127,60 @@ public class NewJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                int a = 3;
-                switch (a) {
-                    case 1:
-                        System.out.println(1);
-                    case 2:
-                        System.out.println(2);
-                    case 3:
-                        System.out.println(3);
-                    case 4:
-                        System.out.println(4);
-                    case 5:
-                        System.out.println(5);
-                    case 6:
-                        System.out.println(6);
-                    case 7:
-                        System.out.println(7);
-                    case 8:
-                        System.out.println(8);
-                    case 9:
-                        System.out.println(9);
-                    case 10:
-                        System.out.println(10);
+//                int a = 3;
+//                switch (a) {
+//                    case 1:
+//                        System.out.println(1);
+//                    case 2:
+//                        System.out.println(2);
+//                    case 3:
+//                        System.out.println(3);
+//                    case 4:
+//                        System.out.println(4);
+//                    case 5:
+//                        System.out.println(5);
+//                    case 6:
+//                        System.out.println(6);
+//                    case 7:
+//                        System.out.println(7);
+//                    case 8:
+//                        System.out.println(8);
+//                    case 9:
+//                        System.out.println(9);
+//                    case 10:
+//                        System.out.println(10);
+//                }
+//                new NewJFrame().setVisible(true);
+//                
+//                
+//                String b = "/battle/of/hero/image/kartu/kecil/kartu blkg.png";
+//                System.out.println(b.contains("/kecil"));
+//                if(b.contains("/kecil")){
+//                    System.out.println(b);
+//                    b = b.replace("/kecil", "");
+//                    System.out.println(b);
+//                }
+
+//                System.out.println(Integer.signum(87654));
+//                
+//                System.out.println(Integer.signum(1));
+//
+//                System.out.println(Integer.signum(-56578));
+//                
+//                System.out.println(Integer.signum(-1));
+//
+//                System.out.println(Integer.signum(0));
+
+                ArrayList<Integer> a = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
+                    a.add(i);
                 }
-                new NewJFrame().setVisible(true);
+                System.out.println(a.toString());
+                a.set(2,null);
+                a.set(4,null);
+                a.trimToSize();
+                a.removeAll(Collections.singleton(null));
+                System.out.println(a.toString());
             }
         });
     }

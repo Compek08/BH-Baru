@@ -41,6 +41,32 @@ public class mCard extends baseModel {
 //        }
 //        return list;
 //    }
+    public ArrayList<Card> getCatPedia(int cat) {
+        ArrayList<Card> Card = new ArrayList<>();
+        String query = "SELECT * FROM `card` WHERE grade = " + cat + "\nORDER BY `nama`";
+        try {
+            PreparedStatement st = koneksi.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Card.add(new Card(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getString(9))
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Card;
+    }
+
     public String getImg(int id) {
         String url = "/battle/of/hero/image/kartu/kartu blkg.png";
         String query = "SELECT `pic` FROM `card` WHERE `id` = " + id;
@@ -58,7 +84,7 @@ public class mCard extends baseModel {
 
     public ArrayList<Card> getCard() {
         ArrayList<Card> Card = new ArrayList<>();
-        String query = "SELECT * FROM `card`";
+        String query = "SELECT * FROM `card` ORDER BY `nama`";
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -90,8 +116,8 @@ public class mCard extends baseModel {
 
     public ArrayList<Card> getCollection() {
         ArrayList<Card> Card = new ArrayList<>();
-        String query = "SELECT `k`.`id_card`, `c`.`nama`, `c`.`pic` FROM `card` c join `koleksi` `k`\n"
-                + "on `k`.`id_card` = `c`.`id`";
+        String query = "SELECT `k`.`id_card`, `c`.`nama`, `c`.`pic` FROM `card` `c` join `koleksi` `k`\n"
+                + "on `k`.`id_card` = `c`.`id` ORDER BY `c`.`nama`";
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -111,8 +137,8 @@ public class mCard extends baseModel {
 
     public ArrayList<Card> getDeck() {
         ArrayList<Card> Card = new ArrayList<>();
-        String query = "SELECT `d`.`id_card`, `c`.`nama`, `c`.`pic` FROM `card` c join `deck` `d`\n"
-                + "on `d`.`id_card` = `c`.`id`";
+        String query = "SELECT * FROM `card` c join `deck` `d`\n"
+                + "on `d`.`id_card` = `c`.`id` ORDER BY `c`.`nama`";
         try {
             PreparedStatement st = koneksi.prepareStatement(query);
             ResultSet rs = st.executeQuery();
@@ -120,8 +146,14 @@ public class mCard extends baseModel {
                 Card.add(new Card(
                         rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3)) {
-                });
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getInt(7),
+                        rs.getString(8),
+                        rs.getString(9))
+                );
             }
 
         } catch (SQLException e) {

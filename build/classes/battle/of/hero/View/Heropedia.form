@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="Category">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Category.add(radioEpic);&#xa;Category.add(radioLegend);&#xa;Category.add(radioRare);&#xa;Category.add(radioSpell);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Category.add(radioEpic);&#xa;Category.add(radioLegend);&#xa;Category.add(radioRare);&#xa;Category.add(radioSpell);&#xa;Category.add(radioAll);"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -79,6 +79,16 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JRadioButton" name="radioAll">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="All Card"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="200" y="140" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JRadioButton" name="radioRare">
       <Properties>
         <Property name="text" type="java.lang.String" value="Rare Card"/>
