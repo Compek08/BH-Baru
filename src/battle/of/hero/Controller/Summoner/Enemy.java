@@ -41,22 +41,16 @@ public class Enemy extends Summoner {
             deck.trimToSize();
         }
         Collections.shuffle(deck);
-        if (deck.size() > 40) {
-            int selisih = deck.size() - 40;
-//            System.out.println(selisih);
-            for (int i = 0; i < selisih; i++) {
-                deck.remove(i);
-            }
-            deck.trimToSize();
-        }
-//        System.out.println(deck.size());
-        for (int i = 0; i < 5; i++) {
-//            System.out.println(deck.get(i).getPic());
-        }
+//        if (deck.size() > 40) {
+//            int selisih = deck.size() - 40;
+////            System.out.println(selisih);
+//            for (int i = 0; i < selisih; i++) {
+//                deck.remove(i);
+//            }
+//            deck.trimToSize();
+//        }
+
         super.setDeck();
-        for (int i = 0; i < 5; i++) {
-//            System.out.println("Enemy = " + deck.get(i).getPic());
-        }
     }
 
     @Override
@@ -65,8 +59,8 @@ public class Enemy extends Summoner {
     }
 
     @Override
-    public void Summon(int urut) {
-        super.Summon(urut);
+    public void Summon(int urut, Card spell) {
+        super.Summon(urut, spell);
     }
 
     @Override

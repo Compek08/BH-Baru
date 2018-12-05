@@ -64,17 +64,27 @@ abstract class Summoner {
 
     public abstract ArrayList<Card> getHand();
 
-    public void Draw(boolean act) {
+    public void Draw(boolean act, Card spell) {
         hand.add(deck.pop());
 //        System.out.println("draw");
         hand.trimToSize();
+        if (act) {
+            if ((spell != null) && hand.get(hand.size() - 1).getArea() == spell.getArea()) {
+                boost(hand.get(hand.size() - 1), spell);
+            }
+        }
 //        System.out.println("tangan = " + hand.size());
         refresh();
     }
 
-    public void DrawFirst(boolean act) {
+    public void DrawFirst(boolean act, Card spell) {
         for (int i = 0; i < 6; i++) {
             hand.add(deck.pop());
+            if (!act) {
+                if ((spell != null) && hand.get(i).getArea() == spell.getArea()) {
+                    boost(hand.get(i), spell);
+                }
+            }
 //            System.out.println("draw awal = " + hand.size());
             String urll = hand.get(i).getPic();
             final int urut = i;
@@ -84,7 +94,7 @@ abstract class Summoner {
         refresh();
     }
 
-    public void Summon(int urut) {
+    public void Summon(int urut, Card spell) {
 //        System.out.println("==Summon kartu==");
 //        if (hand.get(urut).getGrade() == 4) {
 //            spell = hand.get(urut);
@@ -94,6 +104,9 @@ abstract class Summoner {
 //                    
 //                }
 //            }
+//        if ((spell != null) && hand.get(urut).getArea() == spell.getArea()) {
+//            boost(hand.get(urut), spell);
+//        }
         arena.add(hand.get(urut));
 //        }
         System.out.println("Nama = " + hand.get(urut).getNama());
@@ -119,12 +132,21 @@ abstract class Summoner {
                 P.destroy(pil);
             }
         } else {
-            int damage = pilih.getAtk() - target.getAtk();
+            int damage;
+            boolean def = false;
+            if (target.getPic().contains("def")) {
+                damage = pilih.getAtk() - target.getDef();
+                def = true;
+            } else {
+                damage = pilih.getAtk() - target.getAtk();
+            }
             int signum = Integer.signum(damage);
             switch (signum) {
                 case -1:
                     P.destroy(pil);
-                    P.setHP(-damage);
+                    if (!def) {
+                        P.setHP(-damage);
+                    }
                     break;
                 case 0:
                     E.destroy(tar);
@@ -132,7 +154,9 @@ abstract class Summoner {
                     break;
                 case 1:
                     E.destroy(tar);
-                    E.setHP(damage);
+                    if (!def) {
+                        E.setHP(damage);
+                    }
                     break;
             }
 
@@ -177,10 +201,15 @@ abstract class Summoner {
             }
         }
         if (getDeck() == 0) {
-            System.out.println("Game Over");
-            System.exit(1);
+            over = true;
         }
         refresh();
+    }
+
+    protected boolean over = false;
+
+    public boolean isOver() {
+        return over;
     }
 
     public void destroy(int index) {
@@ -342,17 +371,21 @@ abstract class Summoner {
                 case 0:
                     if (user.equals("Play")) {
                         if (urll.contains("def")) {
+                            vClassic.getA1().setVisible(false);
                             vClassic.getA6().setVisible(true);
                             vClassic.getA6().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getA6().setVisible(false);
                             vClassic.getA1().setVisible(true);
                             vClassic.getA1().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
                     } else {
                         if (urll.contains("def")) {
+                            vClassic.getB1().setVisible(false);
                             vClassic.getB2().setVisible(true);
                             vClassic.getB2().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getB2().setVisible(false);
                             vClassic.getB1().setVisible(true);
                             vClassic.getB1().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
@@ -361,17 +394,21 @@ abstract class Summoner {
                 case 1:
                     if (user.equals("Play")) {
                         if (urll.contains("def")) {
+                            vClassic.getA2().setVisible(false);
                             vClassic.getA7().setVisible(true);
                             vClassic.getA7().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getA7().setVisible(false);
                             vClassic.getA2().setVisible(true);
                             vClassic.getA2().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
                     } else {
                         if (urll.contains("def")) {
+                            vClassic.getB3().setVisible(false);
                             vClassic.getB4().setVisible(true);
                             vClassic.getB4().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getB4().setVisible(false);
                             vClassic.getB3().setVisible(true);
                             vClassic.getB3().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
@@ -380,17 +417,21 @@ abstract class Summoner {
                 case 2:
                     if (user.equals("Play")) {
                         if (urll.contains("def")) {
+                            vClassic.getA3().setVisible(false);
                             vClassic.getA8().setVisible(true);
                             vClassic.getA8().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getA8().setVisible(false);
                             vClassic.getA3().setVisible(true);
                             vClassic.getA3().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
                     } else {
                         if (urll.contains("def")) {
+                            vClassic.getB5().setVisible(false);
                             vClassic.getB6().setVisible(true);
                             vClassic.getB6().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getB6().setVisible(false);
                             vClassic.getB5().setVisible(true);
                             vClassic.getB5().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
@@ -399,17 +440,21 @@ abstract class Summoner {
                 case 3:
                     if (user.equals("Play")) {
                         if (urll.contains("def")) {
+                            vClassic.getA4().setVisible(false);
                             vClassic.getA9().setVisible(true);
                             vClassic.getA9().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getA9().setVisible(false);
                             vClassic.getA4().setVisible(true);
                             vClassic.getA4().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
                     } else {
                         if (urll.contains("def")) {
+                            vClassic.getB7().setVisible(false);
                             vClassic.getB8().setVisible(true);
                             vClassic.getB8().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getB8().setVisible(false);
                             vClassic.getB7().setVisible(true);
                             vClassic.getB7().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
@@ -418,17 +463,21 @@ abstract class Summoner {
                 case 4:
                     if (user.equals("Play")) {
                         if (urll.contains("def")) {
+                            vClassic.getA5().setVisible(false);
                             vClassic.getA10().setVisible(true);
                             vClassic.getA10().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getA10().setVisible(false);
                             vClassic.getA5().setVisible(true);
                             vClassic.getA5().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
                     } else {
                         if (urll.contains("def")) {
+                            vClassic.getB9().setVisible(false);
                             vClassic.getB10().setVisible(true);
                             vClassic.getB10().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         } else {
+                            vClassic.getB10().setVisible(false);
                             vClassic.getB9().setVisible(true);
                             vClassic.getB9().setIcon(new javax.swing.ImageIcon(getClass().getResource(urll)));
                         }
@@ -573,6 +622,7 @@ abstract class Summoner {
             pic = pic.replace("kecil", "def");
             arena.get(idx).setPic(pic);
         }
+        refresh();
     }
 
 //    public Card getSpell() {
@@ -595,7 +645,7 @@ abstract class Summoner {
         target.setPic(urll);
     }
 
-    public void activate(Summoner P, Summoner E, Spell Spell) {
+    public void activate(Summoner P, Summoner E, Card Spell) {
         P.getArena().forEach((set) -> {
             if (set.getArea() == Spell.getArea()) {
                 set.setAtk(set.getAtk() + Spell.getAtk());
@@ -604,6 +654,20 @@ abstract class Summoner {
         });
 
         E.getArena().forEach((set) -> {
+            if (set.getArea() == Spell.getArea()) {
+                set.setAtk(set.getAtk() + Spell.getAtk());
+                set.setDef(set.getDef() + Spell.getDef());
+            }
+        });
+
+        P.getHand().forEach((set) -> {
+            if (set.getArea() == Spell.getArea()) {
+                set.setAtk(set.getAtk() + Spell.getAtk());
+                set.setDef(set.getDef() + Spell.getDef());
+            }
+        });
+
+        E.getHand().forEach((set) -> {
             if (set.getArea() == Spell.getArea()) {
                 set.setAtk(set.getAtk() + Spell.getAtk());
                 set.setDef(set.getDef() + Spell.getDef());
@@ -611,7 +675,7 @@ abstract class Summoner {
         });
     }
 
-    public void deactivate(Summoner P, Summoner E, Spell Spell) {
+    public void deactivate(Summoner P, Summoner E, Card Spell) {
         P.getArena().forEach((set) -> {
             if (set.getArea() == Spell.getArea()) {
                 set.setAtk(set.getAtk() - Spell.getAtk());
@@ -625,6 +689,26 @@ abstract class Summoner {
                 set.setDef(set.getDef() - Spell.getDef());
             }
         });
+
+        P.getHand().forEach((set) -> {
+            if (set.getArea() == Spell.getArea()) {
+                set.setAtk(set.getAtk() - Spell.getAtk());
+                set.setDef(set.getDef() - Spell.getDef());
+            }
+        });
+
+        E.getHand().forEach((set) -> {
+            if (set.getArea() == Spell.getArea()) {
+                set.setAtk(set.getAtk() - Spell.getAtk());
+                set.setDef(set.getDef() - Spell.getDef());
+            }
+        });
+
+    }
+
+    public void boost(Card boost, Card spell) {
+        boost.setAtk(boost.getAtk() + spell.getAtk());
+        boost.setDef(boost.getDef() + spell.getDef());
     }
 
     public void setDeck() {

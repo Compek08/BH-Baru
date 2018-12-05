@@ -78,7 +78,7 @@ public class Deck extends javax.swing.JFrame {
 
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("BACK");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -93,7 +93,7 @@ public class Deck extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 130, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 80, 80));
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -104,7 +104,7 @@ public class Deck extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(listDeck);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 350, 180, 280));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 270, 180, 280));
 
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -115,19 +115,19 @@ public class Deck extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(listCard);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 180, 280));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 180, 280));
 
         cardPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/kartu/kartu blkg.png"))); // NOI18N
-        getContentPane().add(cardPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 250, 400));
+        getContentPane().add(cardPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 100, 250, 400));
 
-        btnAdd.setText("Add");
-        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 600, 80, -1));
+        btnAdd.setContentAreaFilled(false);
+        getContentPane().add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 510, 100, 40));
 
-        btnRemove.setText("Remove");
-        getContentPane().add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 600, -1, -1));
+        btnRemove.setContentAreaFilled(false);
+        getContentPane().add(btnRemove, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 510, 90, 40));
 
-        btnSave.setText("Save");
-        getContentPane().add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 600, 70, -1));
+        btnSave.setContentAreaFilled(false);
+        getContentPane().add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, 90, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/bg_dek.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));

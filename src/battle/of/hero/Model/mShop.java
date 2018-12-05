@@ -118,6 +118,37 @@ public class mShop {
                 Collections.shuffle(Cards);
                 get = R.nextInt(gacha.size());
                 break;
+                
+            case "all":
+                Cards.clear();
+                Cards.addAll(mCard.getCard());
+                Collections.shuffle(Cards);
+                gacha.clear();
+                Cards.forEach((Card) -> {
+                    if (Card.getGrade() == 1) {
+                        for (int j = 0; j < 50; j++) {
+                            gacha.add(Card.getId());
+                        }
+                    }
+                    if (Card.getGrade() == 2) {
+                        for (int j = 0; j < 10; j++) {
+                            gacha.add(Card.getId());
+                        }
+                    }
+                    if (Card.getGrade() == 3) {
+                        for (int j = 0; j < 1; j++) {
+                            gacha.add(Card.getId());
+                        }
+                    }
+                    if (Card.getGrade() == 4) {
+                        for (int j = 0; j < 3; j++) {
+                            gacha.add(Card.getId());
+                        }
+                    }
+                });
+                Collections.shuffle(Cards);
+                get = R.nextInt(gacha.size());
+                break;
         }
         mCard.save(gacha.get(get), "koleksi");
         return gacha.get(get);

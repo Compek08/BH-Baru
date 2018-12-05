@@ -33,7 +33,6 @@ public class ABOUT extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Info = new javax.swing.JButton();
         Back = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -43,28 +42,9 @@ public class ABOUT extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Info.setBackground(new java.awt.Color(51, 255, 51));
-        Info.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
-        Info.setText("DEVELOPPER TEAM");
-        Info.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Info.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                InfoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                InfoMouseExited(evt);
-            }
-        });
-        Info.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InfoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Info, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 610, -1, 50));
-
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("BACK");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -79,7 +59,7 @@ public class ABOUT extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 100, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 90, 80));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/tentang.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 2, 1280, 720));
@@ -88,24 +68,12 @@ public class ABOUT extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void InfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InfoActionPerformed
-     JOptionPane.showMessageDialog(this,"Teknik Rekayasa Perangkat Lunak Kelompok 5B", "DEVELOPER TEAM", JOptionPane.INFORMATION_MESSAGE);       
-    }//GEN-LAST:event_InfoActionPerformed
-
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         MainMenu MainMenu = new MainMenu();
         MainMenu.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_BackActionPerformed
-
-    private void InfoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoMouseEntered
-        Info.setBackground(new java.awt.Color(255, 255, 102));
-    }//GEN-LAST:event_InfoMouseEntered
-
-    private void InfoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InfoMouseExited
-        Info.setBackground(new java.awt.Color(51, 255, 51));
-    }//GEN-LAST:event_InfoMouseExited
 
     private void BackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackMouseEntered
         Back.setBackground(new java.awt.Color(255, 255, 102));
@@ -153,7 +121,6 @@ public class ABOUT extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
-    private javax.swing.JButton Info;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

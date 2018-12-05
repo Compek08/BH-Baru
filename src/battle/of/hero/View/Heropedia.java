@@ -63,7 +63,7 @@ public class Heropedia extends javax.swing.JFrame {
 
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("BACK");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -78,7 +78,7 @@ public class Heropedia extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 130, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 90, 80));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setViewportView(cardList);

@@ -12,7 +12,7 @@ package BattleMain;
 public class Hero extends Card {
 
     public Hero(int id, String nama, String des, int atk, int def, int area, int grade, String skill, String pic) {
-        super(id, nama, des, atk, def, area, grade, skill, pic);
+        super(id, nama, des, atk, def, area, grade, pic);
     }
 
 }

@@ -1,5 +1,7 @@
 package battle.of.hero.View;
 
+import javax.swing.JSlider;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,6 +20,14 @@ public class Setting extends javax.swing.JFrame {
      */
     public Setting() {
         initComponents();
+    }
+
+    public JSlider getActVol() {
+        return actVol;
+    }
+
+    public JSlider getBgVol() {
+        return bgVol;
     }
 
     /**
@@ -44,7 +54,7 @@ public class Setting extends javax.swing.JFrame {
 
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("Simpan");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -59,7 +69,7 @@ public class Setting extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 430, 130, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 430, 140, 30));
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setText("Volume Lagu Latar Belakang");
@@ -71,7 +81,7 @@ public class Setting extends javax.swing.JFrame {
 
         Back1.setBackground(new java.awt.Color(51, 255, 51));
         Back1.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back1.setText("BACK");
+        Back1.setContentAreaFilled(false);
         Back1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -86,7 +96,7 @@ public class Setting extends javax.swing.JFrame {
                 Back1ActionPerformed(evt);
             }
         });
-        getContentPane().add(Back1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 130, 40));
+        getContentPane().add(Back1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 190, 90, 80));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/pengaturan.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 0, 1280, 720));

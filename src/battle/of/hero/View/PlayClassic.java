@@ -26,20 +26,43 @@ public class PlayClassic extends javax.swing.JFrame {
      */
     public PlayClassic() {
         initComponents();
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.setBackground(new Color(0, 0, 0, 0));
-        jScrollPane1.getViewport().setOpaque(false);
-        jScrollPane1.getViewport().setBackground(new Color(0, 0, 0, 0));
-        history.setOpaque(false);
-        history.setBackground(new Color(0, 0, 0, 0));
+        Win.setVisible(false);
 
         btnDraw.setBorder(new RoundedBorder(10)); //10 is the radius
         btnDraw.setForeground(Color.BLUE);
         btnDraw.setBorder(new RoundedBorder(10));
+
+        btnStandBy.setBorder(new RoundedBorder(10)); //10 is the radius
+        btnStandBy.setForeground(Color.BLUE);
+        btnStandBy.setBorder(new RoundedBorder(10));
+
+        btnMain1.setBorder(new RoundedBorder(10)); //10 is the radius
+        btnMain1.setForeground(Color.BLUE);
+        btnMain1.setBorder(new RoundedBorder(10));
+
+        btnEnd.setBorder(new RoundedBorder(10)); //10 is the radius
+        btnEnd.setForeground(Color.BLUE);
+        btnEnd.setBorder(new RoundedBorder(10));
+
+        btnStart.setBorder(new RoundedBorder(10)); //10 is the radius
+        btnStart.setForeground(Color.BLUE);
+        btnStart.setBorder(new RoundedBorder(10));
     }
 
-    public JTextArea getHistory() {
-        return history;
+    public JButton getBtnDraw() {
+        return btnDraw;
+    }
+
+    public JButton getBtnEnd() {
+        return btnEnd;
+    }
+
+    public JButton getBtnMain1() {
+        return btnMain1;
+    }
+
+    public JButton getBtnStandBy() {
+        return btnStandBy;
     }
 
     public JButton getBtnStart() {
@@ -48,6 +71,14 @@ public class PlayClassic extends javax.swing.JFrame {
 
     public JLabel getTurn() {
         return Turn;
+    }
+
+    public JLabel getMode() {
+        return Mode;
+    }
+
+    public JLabel getWin() {
+        return Win;
     }
 
     public JButton getA1() {
@@ -240,10 +271,6 @@ public class PlayClassic extends javax.swing.JFrame {
 
     public ButtonGroup getpHand() {
         return pHand;
-    }
-
-    public JButton getEnd() {
-        return End;
     }
 
     public JLabel getEHP() {
@@ -546,8 +573,9 @@ public class PlayClassic extends javax.swing.JFrame {
         D5 = new javax.swing.JButton();
         D6 = new javax.swing.JButton();
         D7 = new javax.swing.JButton();
-        End = new javax.swing.JButton();
+        Mode = new javax.swing.JLabel();
         Turn = new javax.swing.JLabel();
+        Win = new javax.swing.JLabel();
         EHP = new javax.swing.JLabel();
         PHP = new javax.swing.JLabel();
         btnStart = new javax.swing.JButton();
@@ -556,11 +584,7 @@ public class PlayClassic extends javax.swing.JFrame {
         btnDraw = new javax.swing.JButton();
         btnStandBy = new javax.swing.JButton();
         btnMain1 = new javax.swing.JButton();
-        btnAttack = new javax.swing.JButton();
-        btnMain2 = new javax.swing.JButton();
         btnEnd = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        history = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -651,13 +675,17 @@ public class PlayClassic extends javax.swing.JFrame {
         getContentPane().add(D6, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 63, 89));
         getContentPane().add(D7, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 63, 89));
 
-        End.setText("End");
-        End.setContentAreaFilled(false);
-        getContentPane().add(End, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 610, 70, 50));
+        Mode.setFont(new java.awt.Font("Maiandra GD", 1, 30)); // NOI18N
+        Mode.setText("Turn : 1");
+        getContentPane().add(Mode, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 150, 50));
 
         Turn.setFont(new java.awt.Font("Maiandra GD", 1, 30)); // NOI18N
         Turn.setText("Turn : 1");
         getContentPane().add(Turn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, 50));
+
+        Win.setFont(new java.awt.Font("Maiandra GD", 1, 30)); // NOI18N
+        Win.setText("Turn : 1");
+        getContentPane().add(Win, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 150, 50));
 
         EHP.setText("100");
         getContentPane().add(EHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 50, -1, -1));
@@ -665,9 +693,10 @@ public class PlayClassic extends javax.swing.JFrame {
         PHP.setText("100");
         getContentPane().add(PHP, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 670, -1, -1));
 
+        btnStart.setBackground(new java.awt.Color(255, 255, 51));
         btnStart.setFont(new java.awt.Font("SansSerif", 1, 70)); // NOI18N
         btnStart.setText("START");
-        getContentPane().add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 520, 160));
+        getContentPane().add(btnStart, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, 520, 160));
 
         KuburanE.setContentAreaFilled(false);
         getContentPane().add(KuburanE, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 63, 89));
@@ -676,31 +705,16 @@ public class PlayClassic extends javax.swing.JFrame {
         getContentPane().add(KuburanP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 390, 63, 89));
 
         btnDraw.setText("Draw");
-        getContentPane().add(btnDraw, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 340, 60, 30));
+        getContentPane().add(btnDraw, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 60, 30));
 
         btnStandBy.setText("Tunggu");
-        getContentPane().add(btnStandBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 60, 30));
+        getContentPane().add(btnStandBy, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 60, 30));
 
-        btnMain1.setText("Main1");
-        getContentPane().add(btnMain1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 60, 30));
-
-        btnAttack.setText("Attack");
-        getContentPane().add(btnAttack, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 60, 30));
-
-        btnMain2.setText("Main2");
-        getContentPane().add(btnMain2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 60, 30));
+        btnMain1.setText("Main");
+        getContentPane().add(btnMain1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 340, 60, 30));
 
         btnEnd.setText("End");
-        getContentPane().add(btnEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 340, 60, 30));
-
-        history.setEditable(false);
-        history.setColumns(20);
-        history.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
-        history.setForeground(new java.awt.Color(255, 255, 255));
-        history.setRows(5);
-        jScrollPane1.setViewportView(history);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 170));
+        getContentPane().add(btnEnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 60, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/main.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -783,7 +797,6 @@ public class PlayClassic extends javax.swing.JFrame {
     private javax.swing.JButton D7;
     private javax.swing.JLabel EHP;
     private javax.swing.JButton ESpell;
-    private javax.swing.JButton End;
     private javax.swing.ButtonGroup GrA1;
     private javax.swing.ButtonGroup GrA2;
     private javax.swing.ButtonGroup GrA3;
@@ -796,27 +809,25 @@ public class PlayClassic extends javax.swing.JFrame {
     private javax.swing.ButtonGroup GrB5;
     private javax.swing.JButton KuburanE;
     private javax.swing.JButton KuburanP;
+    private javax.swing.JLabel Mode;
     private javax.swing.JLabel Ombean1;
     private javax.swing.JLabel Ombean2;
     private javax.swing.JLabel PHP;
     private javax.swing.JButton PSpell;
     private javax.swing.JLabel Turn;
-    private javax.swing.JButton btnAttack;
+    private javax.swing.JLabel Win;
     private javax.swing.JButton btnDraw;
     private javax.swing.JButton btnEnd;
     private javax.swing.JButton btnMain1;
-    private javax.swing.JButton btnMain2;
     private javax.swing.JButton btnStandBy;
     private javax.swing.JButton btnStart;
     private javax.swing.ButtonGroup eHand;
-    private javax.swing.JTextArea history;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.ButtonGroup pHand;
     // End of variables declaration//GEN-END:variables
 
-    private static class RoundedBorder implements Border {
+    private class RoundedBorder implements Border {
 
         private int radius;
 

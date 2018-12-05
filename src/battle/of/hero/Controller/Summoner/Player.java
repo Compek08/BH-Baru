@@ -77,13 +77,13 @@ public class Player extends Summoner{
     }
 
     @Override
-    public void Summon(int urut) {
-        super.Summon(urut);
+    public void Summon(int urut, Card spell) {
+        super.Summon(urut, spell);
     }
     
     @Override
-    public void Draw(boolean act) {
-        super.Draw(true);
+    public void Draw(boolean act, Card spell) {
+        super.Draw(true, spell);
 //        draw = true;
     }
 

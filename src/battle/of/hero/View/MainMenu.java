@@ -260,7 +260,7 @@ public class MainMenu extends javax.swing.JFrame {
             //        Play Play = new Play();
 //        Play.setVisible(true);
 //        this.dispose();
-cPlay Play = new cPlay();
+            cPlay Play = new cPlay();
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -298,8 +298,7 @@ cPlay Play = new cPlay();
     }//GEN-LAST:event_HelpMouseExited
 
     private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
-        Help Help = new Help();
-        Help.setVisible(true);
+        cHelp help = new cHelp();
         this.dispose();
     }//GEN-LAST:event_HelpActionPerformed
 
@@ -344,8 +343,8 @@ cPlay Play = new cPlay();
             //        Deck Deck = new Deck();
 //        Deck.setVisible(true);
 //        this.dispose();
-cDeck deck = new cDeck();
-this.dispose();
+            cDeck deck = new cDeck();
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -383,8 +382,8 @@ this.dispose();
             //        Shop Shop = new Shop();
 //        Shop.setVisible(true);
 //        this.dispose();
-cShop shop = new cShop();
-this.dispose();
+            cShop shop = new cShop();
+            this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

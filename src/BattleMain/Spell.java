@@ -12,7 +12,7 @@ package BattleMain;
 public class Spell extends Card {
 
     public Spell(int id, String nama, String des, int area, int grade, String skill, String pic) {
-        super(id, nama, des, area, grade, skill, pic);
+        super(id, nama, des, area, grade, pic);
     }
 
 }

@@ -14,15 +14,14 @@ import java.util.Collections;
  * @author rakas 
  1. Cek area lawan 
  2. Jika tidak ada kartu atk : pasang kartu penyerang dengan nilai atk tertinggi 
- 3. Jika ada kartu atk : Cek posisi kartu lawan (horizontal/vertikal/tertutup) 
+ 3. Jika ada kartu atk : Cek posisi kartu lawan (horizontal/vertikal) 
       3a. Jika horizontal, cekSummon nilai def dari kartu yang posisi horizontal 
       3b. Jika vertikal, cekSummon nilai atk dari kartu yang posisi vertikal 
-      3c. Jika kartu tertutup, pasang kartu dengan nilai atk tinggi
-      3d. Jika terdapat dua atau lebih kartu dengan posisi berbeda : 
-          3d1. Cek kartu dengan posisi vertikal terlebih dulu, cekSummon kartu atk yang dimiliki, jika kartu
+      3c. Jika terdapat dua atau lebih kartu dengan posisi berbeda : 
+          3c1. Cek kartu dengan posisi vertikal terlebih dulu, cekSummon kartu atk yang dimiliki, jika kartu
                yang dimiliki bernilai lebih besar dari atk kartu lawan, maka pasang kartu
                tersebut dan serang kartu lawan, jika tidak memiliki kartu dengan nilai
-                 lebih, maka lanjut dengan langkah 3c2. 
+               lebih, maka lanjut dengan langkah 3c2. 
           3c2. Cek kartu lawan dengan posisi horizontal, jika memiliki kartu dengan atk lebih besar dari 
                nilai def lawan, pasang kartu tersebut dan serang kartu yang dicek. 3c3. Pasang kartu dengan
                nilai atk tinggi dan serang kartu lawan dengan posisi tertutup
@@ -70,7 +69,7 @@ public class AIController {
                     pmax = cek.getAtk();
                 }
             });
-            
+
 //            APlayer.forEach((cek) -> {
 //                if (cek.getGrade() == 4) {
 //                    hand.forEach((tangan) -> {
@@ -140,11 +139,12 @@ public class AIController {
         System.out.println("Index AI sumon : " + index);
         return act;
     }
-    
+
     public void setSpell(ArrayList<Integer> area) {
         index = -1;
         Collections.sort(area);
         int itung = 0, max = 0, index = 0;
+        //ngitung area terbanyak
         for (int i = 0; i < area.size(); i++) {
             if (i == 0) {
                 itung++;
@@ -158,7 +158,7 @@ public class AIController {
                         index = i;
                     }
                 }
-                if (i == area.size()-1) {
+                if (i == area.size() - 1) {
                     if (itung > max) {
                         max = itung;
                         index = i;
@@ -166,10 +166,18 @@ public class AIController {
                 }
             }
         }
-        getSpell(area.get(index));
+        System.out.println("area : " + area.toString());
+        System.out.println("max : " + max);
+        System.out.println("itung : " + itung);
+        System.out.println("index : " + index);
+        if ((area != null && max != 0) && (itung != 0 && index != 0)) {
+            System.out.println("getspell : " + area.get(index));
+            getSpell(area.get(index));
+        }
     }
 
     private void getSpell(int area) {
+        index = -1;
         hand.forEach((cek) -> {
             if (cek.getGrade() == 4 && cek.getArea() == area) {
                 index = hand.indexOf(cek);
@@ -180,7 +188,8 @@ public class AIController {
     public ArrayList<Integer> cekAttack() {
         act.clear();
         slc.clear();
-        ArrayList<Integer> urut = new ArrayList<>();ArrayList<Integer> att = new ArrayList<>();
+        ArrayList<Integer> urut = new ArrayList<>();
+        ArrayList<Integer> att = new ArrayList<>();
         index = -1;
         AEnemy.forEach((plus) -> {
             urut.add(plus.getAtk());
@@ -240,11 +249,12 @@ public class AIController {
                         System.out.println("act ngetek : " + act.toString());
                     } else {
                         System.out.println("ngedef");
-                        if (cek.getDef()< AEnemy.get(pil).getAtk()) {
+                        if (cek.getDef() < AEnemy.get(pil).getAtk()) {
                             if (!urut.contains(index) && !slc.contains(pil)) {
                                 if (act.isEmpty()) {
                                     act.add(1);
                                 }
+                                nol = false;
                                 act.add(pil);
                                 act.add(index);
                                 urut.add(index);
@@ -252,12 +262,25 @@ public class AIController {
                             }
                         }
                     }
-                    if (nol) {
+          
+                    boolean sudah = true;
+                    ArrayList<Integer> belum = new ArrayList<>();
+                    for (int i = 0; i < AEnemy.size(); i++) {
+                        
+                        for (int j = 1; j < act.size(); j += 2) {
+                            if (!act.get(j).equals(i)) {
+                                sudah = false;
+                                nol = false;
+                            }
+                        }
+                    }
+
+                    if (nol && sudah) {
                         if (act.isEmpty()) {
                             act.add(1);
                         }
                         act.add(pil);
-                        act.add(-1);
+                        act.add(-2);
                         slc.add(pil);
                     }
 //                AEnemy.forEach((pil) -> {
@@ -267,6 +290,54 @@ public class AIController {
 //                    }
                 });
             });
+
+//            if ((((act.size() - 1) / 2)) > APlayer.size()) {
+            boolean sudah = true;
+            ArrayList<Integer> semua = new ArrayList<>();
+            for (int i = 0; i < AEnemy.size(); i++) {
+                semua.add(i);
+            }
+            ArrayList<Integer> udah = new ArrayList<>();
+            for (int i = 1; i < act.size(); i += 2) {
+                udah.add(act.get(i));
+            }
+            
+            if (udah.containsAll(semua)) {
+                sudah = false;
+            }
+            
+            if (sudah) {
+                for (int i = 0; i < semua.size(); i++) {
+                    if (!udah.contains(semua.get(i))) {
+                        act.add(i);
+                        act.add(-1);
+                    }
+                }
+            }
+
+
+//                for (int i = 0; i < AEnemy.size(); i++) {
+//                    for (int j = 1; j < act.size(); j += 2) {
+//                        System.out.println("for 2");
+//                        if (!act.get(j).equals(i)) {
+//                            System.out.println("if 1");
+//                            for (int k = j - 2; k >= 0; k -= 2) {
+//                                System.out.println("for 3");
+//                                if (act.get(j).equals(act.get(k))) {
+//                                    System.out.println("if 4");
+//                                    sudah = true;
+//                                }
+//                            }
+////                            sudah = true;
+//                        }
+//                    }
+//                    if (sudah) {
+//                        act.add(i);
+//                        act.add(-1);
+//                    }
+//                }
+//            }
+
         } else {
             act.add(0);
         }
@@ -294,7 +365,6 @@ public class AIController {
 //    public AIController() {
 //        
 //    }
-            
     public int getIndex() {
         return index;
     }

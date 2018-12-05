@@ -19,6 +19,7 @@ import java.util.*;
 import battle.of.hero.Controller.Summoner.Player;
 import battle.of.hero.Controller.Summoner.Enemy;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -40,14 +41,15 @@ import javax.swing.WindowConstants;
  */
 public class cPlay {
 
-    private mCard mCard;
-    private Play vPlay;
+    private final mCard mCard;
+    private final mShop mShop;
+    private final Play vPlay;
     private PlayClassic vClassic;
     private PlayArcade vArcade;
     private Semaphore semapor;
     private Player Player;
     private Enemy Enemy;
-    private int turn, win;
+    private int turn, win, game;
     private AIController AI;
     private JOptionPane pane;
     private Object[] options;
@@ -58,17 +60,99 @@ public class cPlay {
     private String mode;
     private Card spell;
     private Refresh refresh;
+    private Playying play;
+//    private Color asli;
+//    private Color active;
 //    ArrayList<Card> hand;
     Card[] A, B;
 //    Arena Arena;
 
     public cPlay() throws SQLException {
         mCard = new mCard();
+        mShop = new mShop();
 //        Arena = new Arena();
         vPlay = new Play();
         vPlay.setVisible(true);
         vPlay.getBtnArcade().addActionListener(new Arcade());
         vPlay.getBtnClassic().addActionListener(new Classic());
+    }
+
+    private class cek {
+
+        public cek() {
+            System.out.println("HP : " + Enemy.getHP());
+            if (Enemy.getHP() < 1) {
+                if (mode.equalsIgnoreCase("arcade") && game <= 3) {
+                    win++;
+                    game++;
+                    vClassic.getMode().setText(mode + " " + game);
+                    vClassic.getWin().setText("Win : " + win);
+                }
+                invisibleAll();
+                new GameOver(true);
+            }
+        }
+    }
+
+    private class winArcade {
+
+        private void show(int id) {
+            pane = new JOptionPane("");
+            options = new String[]{"Ok"};
+            pane.setOptions(options);
+            dialog = new JDialog();
+            dialog = pane.createDialog(new JFrame(), "Selamat");
+            dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            dialog.setLayout(new BorderLayout());
+            dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(mCard.getImg(id)))), BorderLayout.SOUTH);
+            dialog.setSize(300, 522);
+            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+            dialog.setLocation(dim.width / 2 - dialog.getSize().width / 2, dim.height / 2 - dialog.getSize().height / 2);
+            dialog.show();
+            Object obj = pane.getValue();
+            if (obj.equals("Ok")) {
+                MainMenu main = new MainMenu();
+                main.setVisible(true);
+                vClassic.dispose();
+            }
+        }
+
+        private void gacha() {
+            try {
+                int id = mShop.gacha("all");
+                show(id);
+            } catch (SQLException ex) {
+                Logger.getLogger(cShop.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        public winArcade() {
+            gacha();
+        }
+    }
+
+    private class GameOver {
+
+        public GameOver(boolean b) {
+            if (mode.equalsIgnoreCase("arcade")) {
+                mShop.bayar(-(Player.getHP()) * 4);
+                if (b) {
+                    vClassic.getBtnStart().setText("You Menang");
+                } else {
+                    vClassic.getBtnStart().setText("Game Over");
+                }
+            } else {
+                mShop.bayar(-(Player.getHP()) * 2);
+                if (!b) {
+                    vClassic.getBtnStart().setText("Game Over");
+                } else {
+                    vClassic.getBtnStart().setText("You Menang");
+                }
+            }
+            vClassic.getBtnStart().setVisible(true);
+            invisibleAll();
+            over = true;
+        }
     }
 
     private class Refresh {
@@ -92,41 +176,78 @@ public class cPlay {
         public void actionPerformed(ActionEvent e) {
             if (!over) {
                 vClassic.getBtnStart().setVisible(false);
-                vClassic.getEnd().setVisible(true);
                 turn++;
                 vClassic.getTurn().setText("Turn : " + turn);
-
-                Player.DrawFirst(true);
+                Player.DrawFirst(true, spell);
             } else {
-                MainMenu main = new MainMenu();
-                main.setVisible(true);
-                vClassic.dispose();
+                if (mode.equalsIgnoreCase("arcade")) {
+                    if (win == 2) {
+                        winArcade win = new winArcade();
+                    } else {
+                        try {
+                            System.out.println("========= New Arcade ==========");
+                            play = new Playying();
+                            vClassic.getBtnStart().setVisible(false);
+                            turn++;
+                            vClassic.getTurn().setText("Turn : " + turn);
+                            Player.DrawFirst(true, spell);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(cPlay.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                } else {
+                    MainMenu main = new MainMenu();
+                    main.setVisible(true);
+                    vClassic.dispose();
+                }
             }
         }
     }
 
     private class End implements ActionListener {
 
+//        private Object popup() {
+//            JFrame pan = new JFrame();
+//            pane = new JOptionPane("Yakin mengakhiri giliran?");
+//            options = new String[]{"Ok", "Batal"};
+//
+//            pane.setOptions(options);
+//            dialog = new JDialog();
+//            dialog = pane.createDialog(pan, "Selesai Giliran");
+//            dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+//            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//            dialog.setLocation(dim.width / 2 - dialog.getSize().width / 2, dim.height / 2 - dialog.getSize().height / 2);
+//            dialog.show();
+//            Object obj = pane.getValue();
+//            return obj;
+//        }
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Player.getDeck() > 0) {
+            if (Player.getDeck() > 0 && Player.getHP() > 0) {
                 if (turn % 2 == 1) {
+//                    Object obj = popup();
+//                    if (obj.equals("Ok")) {
                     Player.End();
                     if (turn == 1) {
                         Player.setFirstTurn(true);
                     }
 
+                    //Turn Enemy
                     EnemyTurn = new SwingWorker<Void, Void>() {
                         @Override
                         protected Void doInBackground() throws Exception {
+
+//                            vClassic.getBtnEnd().setBackground(active);
+//                            TimeUnit.MILLISECONDS.sleep(300);
+//                            vClassic.getBtnEnd().setBackground(asli);
                             indexAtk.clear();
                             sumon = false;
                             TimeUnit.MILLISECONDS.sleep(300);
                             //Draw musuh
                             if (turn == 2) {
-                                Enemy.DrawFirst(turn % 2 == 1);
+                                Enemy.DrawFirst(turn % 2 == 1, spell);
                             } else {
-                                Enemy.Draw(turn % 2 == 1);
+                                Enemy.Draw(turn % 2 == 1, spell);
                             }
                             TimeUnit.MILLISECONDS.sleep(300);
 
@@ -143,16 +264,16 @@ public class cPlay {
                                     switch (proc) {
                                         case 1:
 //                                        vClassic.getHistory().
-                                            Enemy.Summon(AI.getIndex());
+                                            Enemy.Summon(AI.getIndex(), spell);
 //                                        System.out.println("summon " + proc);
                                             break;
                                         case 2:
                                             if (AI.getIndex() != -1) {
-                                                Enemy.Summon(AI.getIndex());
+                                                Enemy.Summon(AI.getIndex(), spell);
                                             }
                                         case 5:
                                             System.out.println("Index : " + AI.getIndex());
-                                            Enemy.Summon(AI.getIndex());
+                                            Enemy.Summon(AI.getIndex(), spell);
                                             break;
                                     }
                                 }
@@ -183,31 +304,49 @@ public class cPlay {
                                             if (procs.get(i + 1).equals(-1)) {
 //                                            System.out.println(procs.get(i + 1));
                                                 Player.setHP(Enemy.getArena().get(procs.get(i)).getAtk());
-                                            } else {
+                                            } else if (!procs.get(i + 1).equals(-2)) {
                                                 Enemy.Attack(Player, Enemy, procs.get(i), procs.get(i + 1));
+                                            } else {
+                                                Enemy.setDef(procs.get(i));
+//                                                Enemy.getArena().get(procs.get(i)).setPic(Enemy.getArena().get(procs.get(i)).getPic().replace("kecil", "def"));
                                             }
                                             for (int j = i + 1; j < procs.size(); j += 2) {
                                                 System.out.println(procs.get(j) + " -1 " + procs.get(j).equals(-1));
-                                                if ((procs.get(i + 1) > procs.get(j)) && (!procs.get(j).equals(-1))) {
+//                                                if ((procs.get(i + 1) > procs.get(j)) && (!procs.get(j).equals(-1))) {
+                                                if ((procs.get(i + 1) > procs.get(j)) && (procs.get(j) > 0)) {
                                                     procs.set(j, procs.get(j) - 1);
                                                 }
                                             }
                                         }
+                                        break;
                                 }
                             }
-//                            //Spell
-//                            ArrayList<Integer> area = new ArrayList<>();
-//                            Enemy.getArena().forEach((arena) -> {
-//                                area.add(arena.getArea());
-//                            });
-//                            AI.setSpell(area);
-//                            if (AI.getIndex() != -1) {
-//                                spell = Enemy.getHand().get(AI.getIndex());
-//                                Enemy.getHand().remove(AI.getIndex());
-//                                Enemy.getHand().trimToSize();
-//                                Enemy.refresh();
-//                                refresh.Spell();
-//                            }
+                            if (Player.getHP() < 1) {
+                                invisibleAll();
+                                new GameOver(false);
+                            }
+                            //Spell
+                            System.out.println("Spell");
+                            ArrayList<Integer> area = new ArrayList<>();
+                            Enemy.getArena().forEach((arena) -> {
+                                area.add(arena.getArea());
+                            });
+                            System.out.println("area spell" + area.toString());
+                            AI.setSpell(area);
+                            System.out.println(AI.getIndex());
+                            if (AI.getIndex() != -1) {
+                                if (spell == null) {
+                                    spell = Enemy.getHand().get(AI.getIndex());
+                                } else {
+                                    Enemy.deactivate(Player, Enemy, spell);
+                                    spell = Enemy.getHand().get(AI.getIndex());
+                                }
+                                Enemy.activate(Enemy, Player, spell);
+                                Enemy.getHand().remove(AI.getIndex());
+                                Enemy.getHand().trimToSize();
+                                Enemy.refresh();
+                                refresh.Spell();
+                            }
 
                             TimeUnit.MILLISECONDS.sleep(300);
 
@@ -224,8 +363,12 @@ public class cPlay {
                             TimeUnit.MILLISECONDS.sleep(300);
 
                             //Player draw
-                            Player.Draw(true);
+//                            vClassic.getBtnDraw().setBackground(active);
+                            Player.Draw(true, spell);
                             TimeUnit.MILLISECONDS.sleep(300);
+//                            vClassic.getBtnDraw().setBackground(asli);
+
+//                            vClassic.getBtnMain1().setBackground(new java.awt.Color(255, 255, 51));
                             return null;
                         }
                     };
@@ -236,72 +379,74 @@ public class cPlay {
 //                    System.out.println("\n\n\n=====Enemy=====");
                     EnemyTurn.execute();
                 }
+//                }
             } else {
-                vClassic.getBtnStart().setText("Game Over");
                 invisibleAll();
-                vClassic.getBtnStart().setVisible(true);
-                over = true;
+                new GameOver(false);
+            }
+            if (over) {
+                invisibleAll();
             }
         }
+    }
 
-        private void invisibleAll() {
-            //Tombol End
-            vClassic.getEnd().setVisible(false);
+    private void invisibleAll() {
+        //Tombol End
+        vClassic.getBtnEnd().setVisible(true);
 
-            //Arena Player
-            vClassic.getA1().setVisible(false);
-            vClassic.getA2().setVisible(false);
-            vClassic.getA3().setVisible(false);
-            vClassic.getA4().setVisible(false);
-            vClassic.getA5().setVisible(false);
-            vClassic.getA6().setVisible(false);
-            vClassic.getA7().setVisible(false);
-            vClassic.getA8().setVisible(false);
-            vClassic.getA9().setVisible(false);
-            vClassic.getA10().setVisible(false);
+        //Arena Player
+        vClassic.getA1().setVisible(false);
+        vClassic.getA2().setVisible(false);
+        vClassic.getA3().setVisible(false);
+        vClassic.getA4().setVisible(false);
+        vClassic.getA5().setVisible(false);
+        vClassic.getA6().setVisible(false);
+        vClassic.getA7().setVisible(false);
+        vClassic.getA8().setVisible(false);
+        vClassic.getA9().setVisible(false);
+        vClassic.getA10().setVisible(false);
 
-            //Arena Musuh
-            vClassic.getB1().setVisible(false);
-            vClassic.getB2().setVisible(false);
-            vClassic.getB3().setVisible(false);
-            vClassic.getB4().setVisible(false);
-            vClassic.getB5().setVisible(false);
-            vClassic.getB6().setVisible(false);
-            vClassic.getB7().setVisible(false);
-            vClassic.getB8().setVisible(false);
-            vClassic.getB9().setVisible(false);
-            vClassic.getB10().setVisible(false);
+        //Arena Musuh
+        vClassic.getB1().setVisible(false);
+        vClassic.getB2().setVisible(false);
+        vClassic.getB3().setVisible(false);
+        vClassic.getB4().setVisible(false);
+        vClassic.getB5().setVisible(false);
+        vClassic.getB6().setVisible(false);
+        vClassic.getB7().setVisible(false);
+        vClassic.getB8().setVisible(false);
+        vClassic.getB9().setVisible(false);
+        vClassic.getB10().setVisible(false);
 
-            //Hand Player
-            vClassic.getC1().setVisible(false);
-            vClassic.getC2().setVisible(false);
-            vClassic.getC3().setVisible(false);
-            vClassic.getC4().setVisible(false);
-            vClassic.getC5().setVisible(false);
-            vClassic.getC6().setVisible(false);
-            vClassic.getC7().setVisible(false);
+        //Hand Player
+        vClassic.getC1().setVisible(false);
+        vClassic.getC2().setVisible(false);
+        vClassic.getC3().setVisible(false);
+        vClassic.getC4().setVisible(false);
+        vClassic.getC5().setVisible(false);
+        vClassic.getC6().setVisible(false);
+        vClassic.getC7().setVisible(false);
 
-            //Hand Musuh
-            vClassic.getD1().setVisible(false);
-            vClassic.getD2().setVisible(false);
-            vClassic.getD3().setVisible(false);
-            vClassic.getD4().setVisible(false);
-            vClassic.getD5().setVisible(false);
-            vClassic.getD6().setVisible(false);
-            vClassic.getD7().setVisible(false);
+        //Hand Musuh
+        vClassic.getD1().setVisible(false);
+        vClassic.getD2().setVisible(false);
+        vClassic.getD3().setVisible(false);
+        vClassic.getD4().setVisible(false);
+        vClassic.getD5().setVisible(false);
+        vClassic.getD6().setVisible(false);
+        vClassic.getD7().setVisible(false);
 
-            //Spell
-            vClassic.getESpell().setVisible(false);
-            vClassic.getPSpell().setVisible(false);
+        //Spell
+        vClassic.getESpell().setVisible(false);
+        vClassic.getPSpell().setVisible(false);
 
-            //Ombean
-            vClassic.getOmbean1().setVisible(false);
-            vClassic.getOmbean2().setVisible(false);
+        //Ombean
+        vClassic.getOmbean1().setVisible(false);
+        vClassic.getOmbean2().setVisible(false);
 
-            //Kuburan
-            vClassic.getKuburanE().setVisible(false);
-            vClassic.getKuburanP().setVisible(false);
-        }
+        //Kuburan
+        vClassic.getKuburanE().setVisible(false);
+        vClassic.getKuburanP().setVisible(false);
     }
 
     public void Summon(Card card) {
@@ -400,9 +545,10 @@ public class cPlay {
             vClassic.setVisible(true);
             vPlay.dispose();
             mode = "Classic";
+            vClassic.getMode().setText(mode);
             try {
                 //            System.out.println("Compek");
-                Playying play = new Playying();
+                play = new Playying();
             } catch (SQLException ex) {
                 Logger.getLogger(cPlay.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -413,13 +559,18 @@ public class cPlay {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            win = 0;
+            game = 1;
             vClassic = new PlayClassic();
             vClassic.setVisible(true);
             vPlay.dispose();
             mode = "Arcade";
+            vClassic.getMode().setText(mode + " " + game);
+            vClassic.getWin().setText("Win : " + win);
+            vClassic.getWin().setVisible(true);
             try {
                 //            System.out.println("Compek");
-                Playying play = new Playying();
+                play = new Playying();
             } catch (SQLException ex) {
                 Logger.getLogger(cPlay.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -429,21 +580,41 @@ public class cPlay {
     private class Playying {
 
         private Playying() throws SQLException {
+//            asli = vClassic.getBtnDraw().getBackground();
+//            Color active = Color.yellow;
 //            semapor = new Semaphore(0);
             over = false;
             refresh = new Refresh();
             turn = 0;
 //            boolean draw = false;
-            boolean game = true;
+//            boolean game = true;
+//            vClassic.getBtnMain2().setBackground(active);
             Player = new Player(vClassic, "Play");
             Enemy = new Enemy(vClassic, "Com");
+//            if (mode.equalsIgnoreCase("arcade")) {
+//                System.out.println(Player.getHP());
+//                System.out.println(Player.getHP());
+//            }
             AI = new AIController(Player.getArena(), Enemy.getArena(), Enemy.getHand());
             invisibleAll();
             vClassic.getBtnStart().addActionListener(new Start());
 //            System.out.println("\n\n===== Player =====");
-            tangan();
-            lapangan();
-            lawan();
+//            if (mode.equalsIgnoreCase("arcade")) {
+//                System.out.println("line 591");
+//                System.out.println(Player.getHP());
+//                System.out.println(Player.getHP());
+//            }
+            if (mode.equalsIgnoreCase("classic") || game == 1) {
+                System.out.println("bisa");
+                tangan();
+                lapangan();
+                lawan();
+            }
+//            if (mode.equalsIgnoreCase("arcade")) {
+//                System.out.println("line 599");
+//                System.out.println(Player.getHP());
+//                System.out.println(Player.getHP());
+//            }
 //            hand = new ArrayList<>();
 //            Stack<Card> draw = new Stack<>();
 //
@@ -465,12 +636,19 @@ public class cPlay {
 //            vClassic.getC6().setIcon(new javax.swing.ImageIcon(getClass().getResource(hand.get(5).getPic())));
 //
 //            vClassic.getC1().addMouseListener(new C1Action());
-
-            vClassic.getEnd().addActionListener(new End());
+            vClassic.getBtnEnd().addActionListener(new End());
+            if (mode.equalsIgnoreCase("arcade")) {
+                System.out.println(Player.getHP());
+                System.out.println(Player.getHP());
+            }
             vClassic.getKuburanE().addActionListener(new Kuburan(false));
             vClassic.getKuburanP().addActionListener(new Kuburan(true));
             vClassic.getTurn().setText("Turn : " + turn);
-
+//            if (mode.equalsIgnoreCase("arcade")) {
+//                System.out.println("line 633");
+//                System.out.println(Player.getHP());
+//                System.out.println(Player.getHP());
+//            }
 //            while (game) {
 ////            P1(Player, turn);
 //            if (turn % 2 == 1) {
@@ -527,6 +705,8 @@ public class cPlay {
 //        private void P2(Player Player, int turn) throws InterruptedException {
 //            P1(Player, turn);
 //        }
+            Player.refresh();
+            Enemy.refresh();
         }
 
         //Tombolan tangan
@@ -552,6 +732,10 @@ public class cPlay {
             vClassic.getA8().addActionListener(new lapangan(3));
             vClassic.getA9().addActionListener(new lapangan(4));
             vClassic.getA10().addActionListener(new lapangan(5));
+            
+            //Spell
+            vClassic.getPSpell().addActionListener(new spell());
+            vClassic.getESpell().addActionListener(new spell());
         }
 
         //Tombol lawan
@@ -570,14 +754,11 @@ public class cPlay {
 
         private void invisibleAll() {
             //Tombol End
-            vClassic.getEnd().setVisible(false);
+            vClassic.getBtnEnd().setVisible(true);
 
             //Spell
             vClassic.getESpell().setVisible(false);
             vClassic.getPSpell().setVisible(false);
-
-            //Histori
-            vClassic.getHistory().setVisible(false);
 
             //Arena Player
             vClassic.getA1().setVisible(false);
@@ -620,6 +801,45 @@ public class cPlay {
             vClassic.getD5().setVisible(false);
             vClassic.getD6().setVisible(false);
             vClassic.getD7().setVisible(false);
+//            if (mode.equalsIgnoreCase("arcade")) {
+//                System.out.println("line 784");
+//                System.out.println(Player.getHP());
+//                System.out.println(Player.getHP());
+//            }
+        }
+    }
+
+    //Act pitetan spell
+    private Object spellAct() {
+//        JFrame pan = new JFrame();
+//            pan.setLayout(new FlowLayout());
+//            pan.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Player.getHand().get(urut).getPic()))));
+        pane = new JOptionPane("");
+        options = new String[]{"Ok"};
+        pane.setOptions(options);
+        dialog = new JDialog();
+        dialog = pane.createDialog(new JFrame(), "Spell");
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.setLayout(new BorderLayout());
+//            pane.set
+//            dialog.add(pan, BorderLayout.NORTH);
+//            dialog.add(pane, BorderLayout.SOUTH);
+        dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(spell.getPic().replace("/kecil", "")))), BorderLayout.SOUTH);
+        dialog.setSize(300, 522);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        dialog.setLocation(dim.width / 2 - dialog.getSize().width / 2, dim.height / 2 - dialog.getSize().height / 2);
+        dialog.show();
+        Object obj = pane.getValue();
+        return obj;
+    }
+
+    private class spell implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (spell != null) {
+                Object obj = spellAct();
+            }
         }
     }
 
@@ -667,10 +887,16 @@ public class cPlay {
 
             if (obj.equals("Pasang")) {
                 if (Player.getHand().get(i - 1).getGrade() != 4) {
-                    Player.Summon(i - 1);
+                    Player.Summon((i - 1), spell);
                     sumon = true;
                 } else {
-                    spell = Player.getHand().get(i - 1);
+                    if (spell == null) {
+                        spell = Player.getHand().get(i - 1);
+                    } else {
+                        Player.deactivate(Player, Enemy, spell);
+                        spell = Player.getHand().get(i - 1);
+                    }
+                    Player.activate(Player, Enemy, spell);
                     Player.getHand().remove(i - 1);
                     Player.getHand().trimToSize();
                     Player.refresh();
@@ -690,6 +916,9 @@ public class cPlay {
 //            pan.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Player.getHand().get(urut).getPic()))));
         pane = new JOptionPane("");
         if (turn % 2 == 1 && Player.isFirstTurn() && !indexAtk.contains(urut)) {
+            if (Player.getArena().get(urut).getPic().contains("def")) {
+                options = new String[]{"Set", "Batal"};
+            }
             options = new String[]{"Serang", "Set", "Batal"};
         } else {
             options = new String[]{"Ok"};
@@ -702,7 +931,11 @@ public class cPlay {
 //            pane.set
 //            dialog.add(pan, BorderLayout.NORTH);
 //            dialog.add(pane, BorderLayout.SOUTH);
-        dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Player.getArena().get(urut).getPic().replace("/kecil", "")))), BorderLayout.SOUTH);
+        if (Player.getArena().get(urut).getPic().contains("def")) {
+            dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Player.getArena().get(urut).getPic().replace("/def", "")))), BorderLayout.SOUTH);
+        } else {
+            dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Player.getArena().get(urut).getPic().replace("/kecil", "")))), BorderLayout.SOUTH);
+        }
         dialog.setSize(300, 522);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         dialog.setLocation(dim.width / 2 - dialog.getSize().width / 2, dim.height / 2 - dialog.getSize().height / 2);
@@ -730,7 +963,9 @@ public class cPlay {
                     Player.setAttack(true);
                     pilih = i - 1;
                 } else {
+                    indexAtk.add(i - 1);
                     Enemy.setHP(Player.getArena().get(i - 1).getAtk());
+                    new cek();
                 }
             } else if (obj.equals("Set")) {
                 Player.setDef(i - 1);
@@ -757,7 +992,14 @@ public class cPlay {
 //            pane.set
 //            dialog.add(pan, BorderLayout.NORTH);
 //            dialog.add(pane, BorderLayout.SOUTH);
-        dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Enemy.getArena().get(urut).getPic().replace("/kecil", "")))), BorderLayout.SOUTH);
+//        dialog.add(new JLabel("Anda yakin ingin menyerang " + Enemy.getArena().get(urut).getNama() + " dengan attack " + Enemy.getArena().get(urut).getAtk()));
+//        dialog.add(new JLabel("Anda yakin ingin menyerang " + Enemy.getArena().get(urut).getNama()));
+        if (Enemy.getArena().get(urut).getPic().contains("def")) {
+            dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Enemy.getArena().get(urut).getPic().replace("/def", "")))), BorderLayout.SOUTH);
+        } else {
+            dialog.add(new JLabel(new javax.swing.ImageIcon(getClass().getResource(Enemy.getArena().get(urut).getPic().replace("/kecil", "")))), BorderLayout.SOUTH);
+        }
+//        dialog.add(new JLabel("Anda yakin ingin menyerang " + Enemy.getArena().get(urut).getNama()), BorderLayout.PAGE_END);
         dialog.setSize(300, 522);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         dialog.setLocation(dim.width / 2 - dialog.getSize().width / 2, dim.height / 2 - dialog.getSize().height / 2);
@@ -787,8 +1029,61 @@ public class cPlay {
 //                damage = Player.Attack(Player.getArena().get(pilih).getAtk(), Enemy.getArena().get(target).getAtk());
 //                calculate();
                 indexAtk.add(pilih);
+                Player.setAttack(false);
                 Player.Attack(Enemy, Player, pilih, target);
+                new cek();
             }
+        }
+
+        private void invisibleAll() {
+            //Tombol End
+            vClassic.getBtnEnd().setVisible(true);
+
+            //Spell
+            vClassic.getESpell().setVisible(false);
+            vClassic.getPSpell().setVisible(false);
+
+            //Arena Player
+            vClassic.getA1().setVisible(false);
+            vClassic.getA2().setVisible(false);
+            vClassic.getA3().setVisible(false);
+            vClassic.getA4().setVisible(false);
+            vClassic.getA5().setVisible(false);
+            vClassic.getA6().setVisible(false);
+            vClassic.getA7().setVisible(false);
+            vClassic.getA8().setVisible(false);
+            vClassic.getA9().setVisible(false);
+            vClassic.getA10().setVisible(false);
+
+            //Arena Musuh
+            vClassic.getB1().setVisible(false);
+            vClassic.getB2().setVisible(false);
+            vClassic.getB3().setVisible(false);
+            vClassic.getB4().setVisible(false);
+            vClassic.getB5().setVisible(false);
+            vClassic.getB6().setVisible(false);
+            vClassic.getB7().setVisible(false);
+            vClassic.getB8().setVisible(false);
+            vClassic.getB9().setVisible(false);
+            vClassic.getB10().setVisible(false);
+
+            //Hand Player
+            vClassic.getC1().setVisible(false);
+            vClassic.getC2().setVisible(false);
+            vClassic.getC3().setVisible(false);
+            vClassic.getC4().setVisible(false);
+            vClassic.getC5().setVisible(false);
+            vClassic.getC6().setVisible(false);
+            vClassic.getC7().setVisible(false);
+
+            //Hand Musuh
+            vClassic.getD1().setVisible(false);
+            vClassic.getD2().setVisible(false);
+            vClassic.getD3().setVisible(false);
+            vClassic.getD4().setVisible(false);
+            vClassic.getD5().setVisible(false);
+            vClassic.getD6().setVisible(false);
+            vClassic.getD7().setVisible(false);
         }
     }
     //Act pitetan kuburan
@@ -834,7 +1129,7 @@ public class cPlay {
         }
     }
 
-    private static class C2 implements ActionListener {
+    private class C2 implements ActionListener {
 
         public C2() {
         }
@@ -845,7 +1140,7 @@ public class cPlay {
         }
     }
 
-    private static class C3 implements ActionListener {
+    private class C3 implements ActionListener {
 
         public C3() {
         }
@@ -856,7 +1151,7 @@ public class cPlay {
         }
     }
 
-    private static class C4 implements ActionListener {
+    private class C4 implements ActionListener {
 
         public C4() {
         }
@@ -867,7 +1162,7 @@ public class cPlay {
         }
     }
 
-    private static class C5 implements ActionListener {
+    private class C5 implements ActionListener {
 
         public C5() {
         }
@@ -878,7 +1173,7 @@ public class cPlay {
         }
     }
 
-    private static class C6 implements ActionListener {
+    private class C6 implements ActionListener {
 
         public C6() {
         }
@@ -889,7 +1184,7 @@ public class cPlay {
         }
     }
 
-    private static class C7 implements ActionListener {
+    private class C7 implements ActionListener {
 
         public C7() {
         }

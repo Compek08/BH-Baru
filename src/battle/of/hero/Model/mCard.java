@@ -56,7 +56,6 @@ public class mCard extends baseModel {
                         rs.getInt(5),
                         rs.getInt(6),
                         rs.getInt(7),
-                        rs.getString(8),
                         rs.getString(9))
                 );
             }
@@ -97,7 +96,6 @@ public class mCard extends baseModel {
                         rs.getInt(5),
                         rs.getInt(6),
                         rs.getInt(7),
-                        rs.getString(8),
                         rs.getString(9))
                 );
             }
@@ -151,7 +149,6 @@ public class mCard extends baseModel {
                         rs.getInt(5),
                         rs.getInt(6),
                         rs.getInt(7),
-                        rs.getString(8),
                         rs.getString(9))
                 );
             }

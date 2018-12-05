@@ -127,6 +127,8 @@ public class NewJFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                System.out.println(Math.abs(-2 % 6));
+                
 //                int a = 3;
 //                switch (a) {
 //                    case 1:

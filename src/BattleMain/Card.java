@@ -12,7 +12,7 @@ package BattleMain;
 public class Card {
 
     int id, atk = 0, def = 0, area, grade;
-    String skill, pic, nama, des;
+    String pic, nama, des;
 //    private int att, def;
 //    private final String asal, nama;
 //    private boolean position, status;
@@ -39,7 +39,7 @@ public class Card {
         this.des = des;
     }
 
-    public Card(int id, String nama, String des, int atk, int def, int area, int grade, String skill, String pic) {
+    public Card(int id, String nama, String des, int atk, int def, int area, int grade, String pic) {
         this.id = id;
         this.nama = nama;
         this.des = des;
@@ -47,17 +47,15 @@ public class Card {
         this.def = def;
         this.area = area;
         this.grade = grade;
-        this.skill = skill;
         this.pic = pic;
     }
 
-    public Card(int id, String nama, String des, int area, int grade, String skill, String pic) {
+    public Card(int id, String nama, String des, int area, int grade, String pic) {
         this.id = id;
         this.nama = nama;
         this.des = des;
         this.area = area;
         this.grade = grade;
-        this.skill = skill;
         this.pic = pic;
     }
 
@@ -99,14 +97,6 @@ public class Card {
 
     public void setGrade(int grade) {
         this.grade = grade;
-    }
-
-    public String getSkill() {
-        return skill;
-    }
-
-    public void setSkill(String skill) {
-        this.skill = skill;
     }
 
     public String getPic() {

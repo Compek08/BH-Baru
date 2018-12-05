@@ -1,5 +1,8 @@
 package battle.of.hero.View;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +23,22 @@ public class Help extends javax.swing.JFrame {
         initComponents();
     }
 
+    public JButton getBack() {
+        return Back;
+    }
+
+    public JLabel getIsi() {
+        return isi;
+    }
+
+    public JButton getNext() {
+        return next;
+    }
+
+    public JButton getPrev() {
+        return prev;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,13 +49,17 @@ public class Help extends javax.swing.JFrame {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
+        next = new javax.swing.JButton();
+        prev = new javax.swing.JButton();
+        isi = new javax.swing.JLabel();
+        bg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Back.setBackground(new java.awt.Color(51, 255, 51));
         Back.setFont(new java.awt.Font("Bell MT", 1, 14)); // NOI18N
-        Back.setText("BACK");
+        Back.setContentAreaFilled(false);
         Back.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -51,7 +74,17 @@ public class Help extends javax.swing.JFrame {
                 BackActionPerformed(evt);
             }
         });
-        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 40, 130, 40));
+        getContentPane().add(Back, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 600, 430, 70));
+
+        next.setContentAreaFilled(false);
+        getContentPane().add(next, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 530, 160, 40));
+
+        prev.setContentAreaFilled(false);
+        getContentPane().add(prev, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 160, 50));
+        getContentPane().add(isi, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
+
+        bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/battle/of/hero/image/bg_bantuan.png"))); // NOI18N
+        getContentPane().add(bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -108,5 +141,9 @@ public class Help extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
+    private javax.swing.JLabel bg;
+    private javax.swing.JLabel isi;
+    private javax.swing.JButton next;
+    private javax.swing.JButton prev;
     // End of variables declaration//GEN-END:variables
 }
